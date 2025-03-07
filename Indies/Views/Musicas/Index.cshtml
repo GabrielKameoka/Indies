@@ -1,8 +1,13 @@
 ﻿@model IEnumerable<MusicasModel>
 
+@{
+    ViewData["Title"] = "Indies - Músicas";
+}
+
 <div class="text-center">
-    <div class="d-flex justify-content-between align-items-center mb-5 mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-5 mt-5 text-center">
         <h1>Lista de músicas</h1>   
+        <a class="btn btn-success mx-2" asp-controller="Musicas" asp-action="Cadastrar"> Cadastrar música</a>
     </div>
 
     @if (TempData["MensagemSucesso"] != null)
@@ -18,8 +23,8 @@
         <tr>
             <th scope="col">Nome</th>
             <th scope="col">Artista</th>
-            <th scope="col">Lançamento</th>
             <th scope="col">Categoria</th>
+            <th scope="col">Lançamento</th>
             <th scope="col">Controle</th>
         </tr>
         
@@ -35,8 +40,8 @@
                             <a href="@musicas.Link" target="_blank">@musicas.Nome</a>
                         </td>
                         <td>@musicas.Artista</td>
-                        <td>@musicas.Lancamento</td>
                         <td>@musicas.Categoria</td>
+                        <td>@musicas.Lancamento</td>
                         <td>
                             <a class="btn btn-primary mx-2"><i class="bi bi-pencil-fill me-2"></i>Editar</a>
                             <a class="btn btn-danger mx-2"><i class="bi bi-trash-fill me-2"></i>Editar</a>
