@@ -7,7 +7,8 @@ public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
+        
     }
-
-    public DbSet<MusicasModel> Musicas { get; set; }
+    
+    public DbSet<MusicasModel> Musicas { get; set; }  
 }
