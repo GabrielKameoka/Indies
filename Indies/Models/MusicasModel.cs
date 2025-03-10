@@ -8,7 +8,8 @@ public enum CategoriaMusica
     Pop,
     Eletronica,
     Classica,
-    Outros
+    Internacional,
+    Gospel
 }
 
 public class MusicasModel

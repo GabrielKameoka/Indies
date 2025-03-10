@@ -17,6 +17,13 @@
         </div>
     }
 
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger text-danger" role="alert">
+            @TempData["MensagemErro"]
+        </div>
+    }
+
     <table class="table">
         <thead>
         
@@ -43,7 +50,7 @@
                         <td>@musicas.Categoria</td>
                         <td>@musicas.Lancamento</td>
                         <td>
-                            <a class="btn btn-primary mx-2"><i class="bi bi-pencil-fill me-2"></i>Editar</a>
+                            <a class="btn btn-primary mx-2" asp-controller="Musicas" asp-action="Editar"><i class="bi bi-pencil-fill me-2"></i>Editar</a>
                             <a class="btn btn-danger mx-2"><i class="bi bi-trash-fill me-2"></i>Editar</a>
                         </td>
                     </tr>

@@ -2,6 +2,7 @@
 using Indies.Context;
 using Indies.Models;
 using Azure.Core;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Indies.Controllers;
@@ -23,7 +24,7 @@ public class MusicasController : Controller
     [HttpGet]
     public IActionResult Cadastrar(int? id)
     {
-        List<string> categorias = new List<string> { "Rock", "Pop", "Eletrônica", "Clássica", "Outros" };
+        List<string> categorias = new List<string> { "Rock", "Pop", "Eletrônica", "Clássica", "Internacional","Gospel" };
         ViewBag.Categorias = categorias;
         return View();
     }
@@ -47,17 +48,25 @@ public class MusicasController : Controller
     }
 
     [HttpPost]
-    public IActionResult Cadastrar(MusicasModel musicas)
+    public async Task<IActionResult> Cadastrar(MusicasModel musicas)
     {
+        if (await _db.Musicas.AnyAsync(m => m.Nome == musicas.Nome && m.Artista == musicas.Artista))
+        {
+            TempData["MensagemErro"] = "Música já foi cadastrada";
+        
+            return RedirectToAction("Index");
+        }
+        
         if (ModelState.IsValid)
         {
             _db.Musicas.Add(musicas);
-            _db.SaveChanges();
-            
+            await _db.SaveChangesAsync();
+        
             TempData["MensagemSucesso"] = "Música cadastrada com sucesso!";
-            
+        
             return RedirectToAction("Index");
         }
+        
         return View();
     }
     

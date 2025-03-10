@@ -24,21 +24,22 @@
         <div class="mb-5">
             <label for="Categoria" class="form-label text-light">Categoria</label>
             <select class="form-select" asp-for="Categoria" id="Categoria">
-                @if (ViewBag.Categorias != null) // Se as categorias forem dinâmicas
+                @if (ViewBag.Categorias != null) 
                 {
                     @foreach (var categoria in ViewBag.Categorias)
                     {
                         <option value="@categoria">@categoria</option>
                     }
                 }
-                else // Se as categorias forem do enum
+                else
                 {
                     <option value="Rock">Rock</option>
                     <option value="Pop">Pop</option>
                     <option value="Eletronica">Eletrônica</option>
                     <option value="Indie">Indie</option>
                     <option value="Classica">Clássica</option>
-                    <option value="Outros">Outros</option>
+                    <option value="Internacional">Internacional</option>
+                    <option value="Gospel">Gospel</option>
                 }
             </select>
             <span asp-validation-for="Categoria" class="text-danger"></span>
