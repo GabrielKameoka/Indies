@@ -15,6 +15,7 @@ public class MusicasController : Controller
     {
         _db = db;
     }
+    
     public IActionResult Index()
     {
         IEnumerable<MusicasModel> musicas = _db.Musicas;
@@ -44,24 +45,6 @@ public class MusicasController : Controller
             return NotFound();
         }
 
-        return View(musicas);
-    }
-
-    [HttpGet]
-    public IActionResult Deletar(int? id)
-    {
-        if (id == null || id == 0)
-        {
-            return NotFound();
-        }
-
-        MusicasModel musicas = _db.Musicas.Find(id);
-
-        if (musicas == null)
-        {
-            return NotFound();
-        }
-        
         return View(musicas);
     }
 
@@ -103,21 +86,23 @@ public class MusicasController : Controller
 
         return View(musicas);
     }
-
+    
     [HttpPost]
-    public IActionResult Deletar(MusicasModel musicas)
+    public async Task<IActionResult> Deletar(int id)
     {
-        if (ModelState.IsValid)
+        var music = await _db.Musicas.FindAsync(id);
+
+        if (music == null)
         {
-            _db.Musicas.Remove(musicas);
-            _db.SaveChanges();
-            
-            TempData["MensagemSucesso"] = "Música deletada com sucesso!";
-            
+            TempData["MensagemErro"] = "Música não encontrada.";
             return RedirectToAction("Index");
         }
 
-        return View(musicas);
+        _db.Musicas.Remove(music);
+        await _db.SaveChangesAsync();
+
+        TempData["MensagemSucesso"] = "Música excluída com sucesso.";
+        return RedirectToAction("Index");
     }
     
 }
