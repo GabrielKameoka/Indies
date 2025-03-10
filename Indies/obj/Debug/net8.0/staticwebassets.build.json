@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "u5uQzZ3Rc5msHnCDkGf8w2TRNrl0nEILt/3j8IET6fU=",
+  "Hash": "J2cuKG3oX0pWvHEmbmJP2p1pSv034uwT2QX99UIqKYc=",
   "Source": "Indies",
   "BasePath": "_content/Indies",
   "Mode": "Default",
@@ -53,6 +53,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\dev\\Indies\\Indies\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Indies.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\dev\\Indies\\Indies\\wwwroot\\css\\bootstrap.css",
+      "SourceId": "Indies",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\dev\\Indies\\Indies\\wwwroot\\",
+      "BasePath": "_content/Indies",
+      "RelativePath": "css/bootstrap.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\bootstrap.css"
     },
     {
       "Identity": "C:\\dev\\Indies\\Indies\\wwwroot\\css\\site.css",
@@ -1193,6 +1212,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\dev\\Indies\\Indies\\wwwroot\\videos\\Vídeo de fundo Indies ‐ Feito com o Clipchamp.mp4",
+      "SourceId": "Indies",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\dev\\Indies\\Indies\\wwwroot\\",
+      "BasePath": "_content/Indies",
+      "RelativePath": "videos/Vídeo de fundo Indies ‐ Feito com o Clipchamp.mp4",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\videos\\Vídeo de fundo Indies ‐ Feito com o Clipchamp.mp4"
     }
   ]
 }

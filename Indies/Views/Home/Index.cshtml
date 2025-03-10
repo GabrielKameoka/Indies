@@ -2,7 +2,16 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="video-container">
+    <video autoplay muted loop id="meuVideoDeFundo">
+        <source src="videos/Vídeo%20de%20fundo%20Indies%20‐%20Feito%20com%20o%20Clipchamp.mp4" type="video/mp4">
+        Seu navegador não suporta vídeos HTML5.
+    </video>
+</div>
+
+<div id="conteudo-principal" class="text-center mt-5 mt-5">
+    <h1 class="text-light">Bem vindos ao Indies!!</h1>
+    <p class="text-light">Registre músicas originais que vão surpreender as pessoas </p>
+    <p class="text-light">Clique <a asp-controller="Musicas" asp-action="Index">aqui</a> para começar!</p>
+    
 </div>

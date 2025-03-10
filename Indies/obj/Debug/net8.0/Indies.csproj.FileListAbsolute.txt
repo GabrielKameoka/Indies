@@ -167,3 +167,5 @@ C:\dev\Indies\Indies\obj\Debug\net8.0\refint\Indies.dll
 C:\dev\Indies\Indies\obj\Debug\net8.0\Indies.pdb
 C:\dev\Indies\Indies\obj\Debug\net8.0\Indies.genruntimeconfig.cache
 C:\dev\Indies\Indies\obj\Debug\net8.0\ref\Indies.dll
+C:\dev\Indies\Indies\bin\Debug\net8.0\package-lock.json
+C:\dev\Indies\Indies\bin\Debug\net8.0\package.json

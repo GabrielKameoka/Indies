@@ -1,30 +1,30 @@
 ﻿@model IEnumerable<MusicasModel>
 
 @{
-    ViewData["Title"] = "Indies - Músicas";
+    ViewData["Title"] = "Músicas";
 }
 
 <div class="text-center">
     <div class="d-flex justify-content-between align-items-center mb-5 mt-5 text-center">
-        <h1>Lista de músicas</h1>
-        <a class="btn btn-success mx-2" asp-controller="Musicas" asp-action="Cadastrar"> Cadastrar música</a>
+        <h1 class="text-light">Lista de músicas</h1>
+        <a class="btn btn-primary mx-2" asp-controller="Musicas" asp-action="Cadastrar"> <i class="bi bi-send"></i> Cadastrar música</a>
     </div>
 
     @if (TempData["MensagemSucesso"] != null)
     {
-        <div class="alert alert-success text-success" role="alert">
+        <div class="alert alert-success text-light" role="alert">
             @TempData["MensagemSucesso"]
         </div>
     }
 
     @if (TempData["MensagemErro"] != null)
     {
-        <div class="alert alert-danger text-danger" role="alert">
+        <div class="alert alert-danger text-light" role="alert">
             @TempData["MensagemErro"]
         </div>
     }
 
-    <table class="table">
+    <table class="table bg-primary table-hover rounded-3 overflow-hidden p-5">
         <thead>
         <tr>
             <th scope="col">Nome</th>
@@ -34,7 +34,7 @@
             <th scope="col">Controle</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="table-striped">
         @if (Model != null)
         {
             @foreach (var musicas in Model)
@@ -47,7 +47,7 @@
                     <td>@musicas.Categoria</td>
                     <td>@musicas.Lancamento</td>
                     <td>
-                        <a asp-controller="Musicas" asp-action="Editar" asp-route-id="@musicas.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-fill me-2"></i>Editar</a>
+                        <a asp-controller="Musicas" asp-action="Editar" asp-route-id="@musicas.Id" class="btn btn-info mx-2"><i class="bi bi-pencil-fill me-2"></i>Editar</a>
                         <form asp-controller="Musicas" asp-action="Deletar" asp-route-id="@musicas.Id" method="post" style="display: inline-block;">
                             <button type="submit" class="btn btn-danger mx-2" onclick="return confirm('Tem certeza que deseja excluir esta música?')"><i class="bi bi-trash-fill me-2"></i>Deletar</button>
                         </form>

@@ -1,3 +1,5 @@
+
+
 html {
   font-size: 14px;
 }
@@ -19,4 +21,12 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+header nav{
+  background-color: #eea21a;
+}
+
+.nav-item{
+  background-color: #f7d150;
 }

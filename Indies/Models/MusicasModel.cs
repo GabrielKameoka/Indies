@@ -6,8 +6,8 @@ public enum CategoriaMusica
 {
     Rock,
     Pop,
-    Eletronica,
-    Classica,
+    Eletrônica,
+    Clássica,
     Internacional,
     Gospel
 }
