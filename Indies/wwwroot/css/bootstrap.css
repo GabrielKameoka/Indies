@@ -12165,3 +12165,10 @@ textarea.form-control-lg {
   color: white; /* Garante que o texto seja visível sobre o vídeo */
   padding: 20px;
 }
+
+*{
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+
+}
