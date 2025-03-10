@@ -50,8 +50,8 @@
                         <td>@musicas.Categoria</td>
                         <td>@musicas.Lancamento</td>
                         <td>
-                            <a class="btn btn-primary mx-2" asp-controller="Musicas" asp-action="Editar"><i class="bi bi-pencil-fill me-2"></i>Editar</a>
-                            <a class="btn btn-danger mx-2"><i class="bi bi-trash-fill me-2"></i>Editar</a>
+                            <a asp-controller="Musicas" asp-action="Editar" asp-route-id="@musicas.Id" class=  "btn btn-primary mx-2"><i class="bi bi-pencil-fill me-2"></i>Editar</a>
+                            <a asp-controller="Musicas" asp-action="Deletar" asp-route-id="@musicas.Id" class="btn btn-danger mx-2"><i class="bi bi-trash-fill me-2"></i>Deletar</a>
                         </td>
                     </tr>
                 }

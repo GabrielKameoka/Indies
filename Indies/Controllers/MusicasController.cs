@@ -47,10 +47,28 @@ public class MusicasController : Controller
         return View(musicas);
     }
 
+    [HttpGet]
+    public IActionResult Deletar(int? id)
+    {
+        if (id == null || id == 0)
+        {
+            return NotFound();
+        }
+
+        MusicasModel musicas = _db.Musicas.Find(id);
+
+        if (musicas == null)
+        {
+            return NotFound();
+        }
+        
+        return View(musicas);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Cadastrar(MusicasModel musicas)
     {
-        if (await _db.Musicas.AnyAsync(m => m.Nome == musicas.Nome && m.Artista == musicas.Artista))
+        if (await _db.Musicas.AnyAsync(m => m.Nome == musicas.Nome && m.Artista == musicas.Artista && m.Link == musicas.Link))
         {
             TempData["MensagemErro"] = "Música já foi cadastrada";
         
@@ -68,6 +86,38 @@ public class MusicasController : Controller
         }
         
         return View();
+    }
+
+    [HttpPost]
+    public IActionResult Editar(MusicasModel musicas)
+    {
+        if (ModelState.IsValid)
+        {
+            _db.Musicas.Update(musicas);
+            _db.SaveChanges();
+            
+            TempData["MensagemSucesso"] = "Música editada com sucesso!";
+            
+            return RedirectToAction("Index");
+        }
+
+        return View(musicas);
+    }
+
+    [HttpPost]
+    public IActionResult Deletar(MusicasModel musicas)
+    {
+        if (ModelState.IsValid)
+        {
+            _db.Musicas.Remove(musicas);
+            _db.SaveChanges();
+            
+            TempData["MensagemSucesso"] = "Música deletada com sucesso!";
+            
+            return RedirectToAction("Index");
+        }
+
+        return View(musicas);
     }
     
 }
