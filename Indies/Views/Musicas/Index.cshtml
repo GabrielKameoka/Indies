@@ -31,6 +31,7 @@
             <th scope="col">Artista</th>
             <th scope="col">Categoria</th>
             <th scope="col">Lançamento</th>
+            <th scope="col">Usuário</th>
             <th scope="col">Controle</th>
         </tr>
         </thead>
@@ -46,6 +47,16 @@
                     <td>@musicas.Artista</td>
                     <td>@musicas.Categoria</td>
                     <td>@musicas.Lancamento</td>
+                    <td>
+                        @if (musicas.Usuario != null)
+                        {
+                            @musicas.Usuario.Nome
+                        }
+                        else
+                        {
+                            <span>Usuário não associado</span>
+                        }
+                    </td>
                     <td>
                         <a asp-controller="Musicas" asp-action="Editar" asp-route-id="@musicas.Id" class="btn btn-info mx-2" style="font-weight: 200"><i class="bi bi-pencil-fill me-2"></i>Editar</a>
                         <form asp-controller="Musicas" asp-action="Deletar" asp-route-id="@musicas.Id" method="post" style="display: inline-block;">

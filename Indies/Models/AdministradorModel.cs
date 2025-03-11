@@ -2,5 +2,5 @@
 
 public class AdministradorModel : UsuariosModel
 {
-    public Guid Chave { get; set; }
+    public Guid Chave { get; set; } = new Guid();
 }

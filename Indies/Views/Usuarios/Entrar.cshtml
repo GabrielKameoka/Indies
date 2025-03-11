@@ -1,0 +1,34 @@
+﻿@model Indies.Models.UsuariosModel
+
+@{
+    ViewData["Title"] = "Entrar";
+}
+
+
+<div class="container bg-dark mt-5 p-4 rounded-3 overflow-hidden">
+    <div class="mb-5 text-center">
+        <h1 class="text-light" style="font-weight: 200">Entrar</h1>
+    </div>
+
+    <form method="post" asp-controller="Usuarios" asp-action="Entrar">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label for="Email" class="form-label text-light">Email</label>
+            <input type="email" class="form-control" asp-for="Email" id="Email" placeholder="Qual o seu Email?" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="Senha" class="form-label text-light">Senha</label>
+            <input type="password" class="form-control" asp-for="Senha" id="Senha" placeholder="Digite sua senha" autocomplete="current-password" required />
+            <span asp-validation-for="Senha" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex gap-5 mt-5">
+            <button type="submit" class="btn btn-success">Entrar</button>
+        </div>
+    </form>
+
+
+</div>

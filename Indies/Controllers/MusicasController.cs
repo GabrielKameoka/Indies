@@ -18,7 +18,7 @@ public class MusicasController : Controller
     
     public IActionResult Index()
     {
-        IEnumerable<MusicasModel> musicas = _db.Musicas;
+        IEnumerable<MusicasModel> musicas = _db.Musicas.Include(m => m.Usuario);
         return View(musicas);
     }
 
@@ -51,25 +51,27 @@ public class MusicasController : Controller
     [HttpPost]
     public async Task<IActionResult> Cadastrar(MusicasModel musicas)
     {
+        if (!ModelState.IsValid)
+        {
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                Console.WriteLine(error.ErrorMessage); // Verifique os erros no console
+            }
+            return View(musicas);
+        }
+
         if (await _db.Musicas.AnyAsync(m => m.Nome == musicas.Nome && m.Artista == musicas.Artista))
         {
             TempData["MensagemErro"] = "Esta música já existe no banco";
-        
             return RedirectToAction("Cadastrar");
         }
-        
-        if (ModelState.IsValid)
-        {
-            _db.Musicas.Add(musicas);
-            await _db.SaveChangesAsync();
-        
-            TempData["MensagemSucesso"] = "Música cadastrada com sucesso!";
-        
-            return RedirectToAction("Index");
-        }
-        
-        return View();
+
+        _db.Musicas.Add(musicas);
+        await _db.SaveChangesAsync();
+        TempData["MensagemSucesso"] = "Música cadastrada com sucesso!";
+        return RedirectToAction("Index");
     }
+
 
     [HttpPost]
     public IActionResult Editar(MusicasModel musicas)
