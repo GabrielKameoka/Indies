@@ -11,4 +11,6 @@ public class ApplicationDbContext : DbContext
     }
     
     public DbSet<MusicasModel> Musicas { get; set; }  
+    public DbSet<UsuariosModel> Usuarios { get; set; }  
+    public DbSet<AdministradorModel> Administrador { get; set; }  
 }
