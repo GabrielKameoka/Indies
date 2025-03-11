@@ -51,11 +51,11 @@ public class MusicasController : Controller
     [HttpPost]
     public async Task<IActionResult> Cadastrar(MusicasModel musicas)
     {
-        if (await _db.Musicas.AnyAsync(m => m.Nome == musicas.Nome && m.Artista == musicas.Artista && m.Link == musicas.Link))
+        if (await _db.Musicas.AnyAsync(m => m.Nome == musicas.Nome && m.Artista == musicas.Artista))
         {
             TempData["MensagemErro"] = "Esta música já existe no banco";
         
-            return RedirectToAction("Index");
+            return RedirectToAction("Cadastrar");
         }
         
         if (ModelState.IsValid)
