@@ -30,4 +30,6 @@ public class MusicasModel
     
     [Required(ErrorMessage = "Digite a data do lançamento")]
     public DateOnly Lancamento { get; set; }
+
+    public UsuariosModel Usuario { get; set; }
 }

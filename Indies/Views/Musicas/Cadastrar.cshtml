@@ -13,19 +13,19 @@
         <h1 class="text-light" style="font-weight: 200">Cadastrar músicas</h1>
     </div>
     <form method="post" asp-controller="Musicas" asp-action="Cadastrar">
-        <div class="mb-5">
+        <div class="mb-3">
             <label for="Nome" class="form-label text-light">Nome</label>
             <input type="text" class="form-control" asp-for="Nome" id="Nome" placeholder="Qual o nome da música?"/>
             <span asp-validation-for="Nome" class="text-danger"></span>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-3">
             <label for="Artista" class="form-label text-light">Artista</label>
             <input type="text" class="form-control" asp-for="Artista" id="Artista" placeholder="Qual o nome do(a) artista?"/>
             <span asp-validation-for="Artista" class="text-danger"></span>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-3">
             <label for="Categoria" class="form-label text-light">Categoria</label>
             <select class="form-select" asp-for="Categoria" id="Categoria">
                 @if (ViewBag.Categorias != null) 
@@ -49,13 +49,13 @@
             <span asp-validation-for="Categoria" class="text-danger"></span>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-3">
             <label for="Lancamento" class="form-label text-light">Lançamento</label>
             <input type="date" class="form-control" asp-for="Lancamento" id="Lancamento" placeholder="Qual o Lançamento da música?"/>
             <span asp-validation-for="Lancamento" class="text-danger"></span>
         </div>
 
-        <div class="mb-5">
+        <div class="mb-3">
             <label for="Link" class="form-label text-light">Link</label>
             <input type="text" class="form-control" asp-for="Link" id="Link" placeholder="Cole o link"/>
             <span asp-validation-for="Link" class="text-danger"></span>

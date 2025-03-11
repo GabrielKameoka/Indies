@@ -1,4 +1,6 @@
-﻿@{
+﻿@model UsuariosModel
+
+@{
     ViewData["Title"] = "Login";
 }
 
@@ -10,8 +12,26 @@
     
     <form method="post" asp-controller="Usuarios" asp-action="Cadastrar">
         
-        <div class="mb-5">
-            <label for="Nome"></label>
+        <div class="mb-3">
+            <label for="Nome" class="form-label text-light">Nome</label>
+            <input type="text" class="form-control" asp-for="Nome" id="Nome" placeholder="Qual o seu nome?"/>
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="Email" class="form-label text-light">Email</label>
+            <input type="text" class="form-control" asp-for="Email" id="Email" placeholder="Qual o seu Email?"/>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="Senha" class="form-label text-light">Senha</label>
+            <input type="password" class="form-control" asp-for="Senha" id="Senha" placeholder="Crie uma senha"/>
+            <span asp-validation-for="Senha" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex gap-5 mt-5">
+            <button type="submit" class="btn btn-success m-50">Login</button>
         </div>
         
     </form>

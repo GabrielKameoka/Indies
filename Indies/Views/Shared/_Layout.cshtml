@@ -1,5 +1,7 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -11,7 +13,9 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
 </head>
 <body>
 <header>
@@ -19,7 +23,8 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 bg-primary"
              data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index"><img src="favicon.ico" style="width: 50px"/></a>
+                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index"><img
+                        src="favicon.ico" style="width: 50px"/></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -28,20 +33,69 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="btn btn-lg btn-primary" asp-area="" asp-controller="Home" asp-action="Index" style="font-weight: 200">Home</a>
+                            <a class="btn btn-lg btn-primary" asp-area="" asp-controller="Home" asp-action="Index"
+                               style="font-weight: 200">Início</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-lg btn-primary" asp-area="" asp-controller="Musicas" asp-action="Index" style="font-weight: 200">Músicas</a>
+                            <a class="btn btn-lg btn-primary" asp-area="" asp-controller="Musicas" asp-action="Index"
+                               style="font-weight: 200">Músicas</a>
                         </li>
                     </ul>
                 </div>
+
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#meuModal">
+                        <i class="bi bi-person"></i>
+                    </button>
+
+                    <div class="modal fade" id="meuModal" tabindex="-1" aria-labelledby="meuModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    @{
+                                        string nomeCompleto = Context.Session.GetString("NomeUsuario");
+                                        string primeiroNome = "";
+
+                                        if (!string.IsNullOrEmpty(nomeCompleto))
+                                        {
+                                            int posicaoEspaco = nomeCompleto.IndexOf(" ");
+                                            if (posicaoEspaco > 0)
+                                            {
+                                                primeiroNome = nomeCompleto.Substring(0, posicaoEspaco);
+                                            }
+                                            else
+                                            {
+                                                primeiroNome = nomeCompleto;
+                                            }
+                                        }
+                                    }
+                                    <h5 class="modal-title" id="meuModalLabel">@primeiroNome</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    @if (string.IsNullOrEmpty(Context.Session.GetString("NomeUsuario")))
+                                    {
+                                        <a asp-controller="Usuarios" asp-action="Cadastrar" class="btn btn-primary">Cadastrar</a>
+                                    }
+                                    else
+                                    {
+                                        <p>Seja bem vindo @Context.Session.GetString("NomeUsuario")</p>
+                                    }
+                                </div>
+                                <div class="modal-footer">
+                                    @if (!string.IsNullOrEmpty(Context.Session.GetString("NomeUsuario")))
+                                    {
+                                        <a asp-controller="Usuarios" asp-action="Logout" class="btn btn-danger">Sair</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
-        
-        <div>
-            
-            
-        </div>
     </div>
 </header>
 <div class="container">
@@ -53,6 +107,10 @@
 <footer class="footer text-muted mt-5 mt-5">
     <div class="container">
         &copy; 2025 - Indies - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        
+        <a href="#">Instagram</a>
+        <a href="#">Linkedin</a>
+        <a href="#">GitHub</a>
     </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

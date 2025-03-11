@@ -16,16 +16,20 @@ public class UsuariosController : Controller
     public IActionResult Cadastrar(string returnUrl = null)
     {
         ViewData["ReturnUrl"] = returnUrl;
-        return View();
+        return View(new UsuariosModel());
     }
 
     [HttpPost]
     public IActionResult Cadastrar(UsuariosModel usuarios)
     {
+        bool logado = false;
         if (ModelState.IsValid)
         {
             _db.Usuarios.Add(usuarios);
             _db.SaveChanges();
+            
+            logado = true;
+            HttpContext.Session.SetString("NomeUsuario", usuarios.Nome);
             
             string returnUrl = (string)TempData["ReturnUrl"];
 
@@ -38,6 +42,14 @@ public class UsuariosController : Controller
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
         }
+        ViewBag.Logado = logado;
         return View(usuarios);
     }
+    
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();
+        return RedirectToAction("Index", "Home");
+    }
+    
 }
