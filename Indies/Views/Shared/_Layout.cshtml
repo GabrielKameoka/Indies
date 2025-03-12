@@ -18,19 +18,6 @@
         rel="stylesheet">
 </head>
 <body>
-@if (TempData["MensagemErro"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["MensagemErro"]
-    </div>
-}
-
-@if (TempData["MensagemSucesso"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["MensagemSucesso"]
-    </div>
-}
 <header>
     <div>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 bg-primary"

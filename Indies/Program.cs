@@ -4,6 +4,21 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie("Cookies", options =>
+    {
+        options.LoginPath = "/Usuarios/Entrar"; 
+        options.LogoutPath = "/Usuarios/Logout";
+        options.AccessDeniedPath = "/Home/AcessoNegado"; 
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest; 
+        options.Cookie.SameSite = SameSiteMode.Lax; 
+        options.ExpireTimeSpan = TimeSpan.FromDays(7);
+    });
+
+builder.Services.AddAuthorization(); 
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(60);
@@ -11,7 +26,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-// Add services to the container.
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ApplicationDbContext>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -21,7 +36,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -30,24 +44,33 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseSession();
 
-// 🔥 Adicione este middleware **antes** de `app.UseRouting();`
 app.Use(async (context, next) =>
 {
+    // Verificando se o cookie "UsuarioId" existe antes de adicionar na sessão
     if (context.Session.GetInt32("UsuarioId") == null && context.Request.Cookies.ContainsKey("UsuarioId"))
     {
-        // Se a sessão estiver vazia mas houver um cookie, restaurar os dados
         context.Session.SetInt32("UsuarioId", int.Parse(context.Request.Cookies["UsuarioId"]));
-        context.Session.SetString("NomeUsuario", context.Request.Cookies["NomeUsuario"]);
+
+        // Aqui, verifique se o cookie "NomeUsuario" existe antes de adicionar na sessão
+        var nomeUsuario = context.Request.Cookies["NomeUsuario"];
+        if (!string.IsNullOrEmpty(nomeUsuario))
+        {
+            context.Session.SetString("NomeUsuario", nomeUsuario);
+        }
     }
 
     await next();
 });
 
+
 app.UseRouting();
-app.UseAuthorization();
+
+app.UseAuthentication(); 
+app.UseAuthorization();  
+
+
 
 app.MapControllerRoute(
     name: "default",

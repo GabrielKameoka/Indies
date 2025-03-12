@@ -12,5 +12,14 @@ public class ApplicationDbContext : DbContext
     
     public DbSet<MusicasModel> Musicas { get; set; }  
     public DbSet<UsuariosModel> Usuarios { get; set; }  
-    public DbSet<AdministradorModel> Administrador { get; set; }  
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<MusicasModel>()
+            .HasOne(m => m.Usuario)
+            .WithMany()  
+            .HasForeignKey(m => m.UsuarioId);
+    }
 }

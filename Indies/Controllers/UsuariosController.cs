@@ -1,6 +1,10 @@
-﻿using Indies.Context;
+﻿using System.Security.Claims;
+using Indies.Context;
 using Indies.Models;
 using BCrypt.Net;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Indies.Controllers;
@@ -24,10 +28,14 @@ public class UsuariosController : Controller
     {
         return View();
     }
+    
+    
 
     [HttpPost]
     public IActionResult Cadastrar(UsuariosModel usuarios)
     {
+        
+        
         if (ModelState.IsValid)
         {
             string senhaCriptografada = BCrypt.Net.BCrypt.HashPassword(usuarios.Senha);
@@ -45,9 +53,11 @@ public class UsuariosController : Controller
 
         return View(usuarios);
     }
+    
+    
 
     [HttpPost]
-    public IActionResult Entrar(UsuariosModel usuarios)
+    public async Task<IActionResult> Entrar(UsuariosModel usuarios)
     {
         var usuarioExistente = _db.Usuarios.FirstOrDefault(x => x.Email == usuarios.Email);
 
@@ -57,35 +67,45 @@ public class UsuariosController : Controller
             return View(usuarios);
         }
 
-        HttpContext.Session.SetInt32("UsuarioId", usuarioExistente.Id);
-        HttpContext.Session.SetString("NomeUsuario", usuarioExistente.Nome);
-
-        var cookieOptions = new CookieOptions
+        var claims = new List<Claim>
         {
-            Expires = DateTime.Now.AddDays(7),
-            HttpOnly = true,
-            IsEssential = true
+            new Claim(ClaimTypes.NameIdentifier, usuarioExistente.Id.ToString()),
+            new Claim(ClaimTypes.Name, usuarioExistente.Email)
         };
 
-        Response.Cookies.Append("UsuarioId", usuarioExistente.Id.ToString(), cookieOptions);
-        Response.Cookies.Append("NomeUsuario", usuarioExistente.Nome, cookieOptions);
+        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+        var authProperties = new AuthenticationProperties
+        {
+            IsPersistent = true, 
+            ExpiresUtc = DateTime.UtcNow.AddDays(7)
+        };
+
+        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, authProperties);
+
+        HttpContext.Session.SetInt32("UsuarioId", usuarioExistente.Id);
+        HttpContext.Session.SetString("NomeUsuario", usuarioExistente.Nome);
+        Response.Cookies.Append("UsuarioId", usuarioExistente.Id.ToString(), new CookieOptions { Expires = DateTime.UtcNow.AddDays(7) });
 
         return RedirectToAction("Index", "Home");
     }
-
-
-
 
     
-    public IActionResult Logout()
+    
+    public async Task<IActionResult> Logout()
     {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         HttpContext.Session.Clear();
 
-        Response.Cookies.Delete("UsuarioId");
-        Response.Cookies.Delete("NomeUsuario");
+        foreach (var cookie in HttpContext.Request.Cookies.Keys)
+        {
+            HttpContext.Response.Cookies.Delete(cookie);
+        }
 
         return RedirectToAction("Index", "Home");
     }
+
 
     
 }

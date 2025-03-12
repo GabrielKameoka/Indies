@@ -1,35 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Indies.Context;
 using Indies.Models;
-using Azure.Core;
-using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Indies.Controllers;
 
 public class MusicasController : Controller
 {
-    readonly private ApplicationDbContext _db;
-    
+    private readonly ApplicationDbContext _db;
+
     public MusicasController(ApplicationDbContext db)
     {
         _db = db;
     }
-    
+
     public IActionResult Index()
     {
-        IEnumerable<MusicasModel> musicas = _db.Musicas.Include(m => m.Usuario);
+        var musicas = _db.Musicas.Include(m => m.Usuario).ToList();
         return View(musicas);
     }
-
-    [HttpGet]
-    public IActionResult Cadastrar(int? id)
-    {
-        List<string> categorias = new List<string> { "Rock", "Pop", "Eletrônica", "Clássica", "Internacional","Gospel" };
-        ViewBag.Categorias = categorias;
-        return View();
-    }
-
+    
+    
+    
     [HttpGet]
     public IActionResult Editar(int? id)
     {
@@ -37,74 +30,127 @@ public class MusicasController : Controller
         {
             return NotFound();
         }
-        
-        MusicasModel musicas = _db.Musicas.Find(id);
+
+        var musicas = _db.Musicas.Find(id);
 
         if (musicas == null)
         {
             return NotFound();
         }
 
+        ViewBag.Categorias = new List<string> { "Rock", "Pop", "Eletrônica", "Clássica", "Nacional", "Gospel" };
         return View(musicas);
     }
+    
+    
+
+    [HttpGet]
+    [Authorize]
+    public IActionResult Cadastrar()
+    {
+        ViewBag.Categorias = new List<string> { "Rock", "Pop", "Eletrônica", "Clássica", "Nacional", "Gospel" };
+        return View();
+    }
+
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Cadastrar(MusicasModel musicas)
     {
-        if (!ModelState.IsValid)
+        var usuarioLogado = User.Identity.Name;
+        var usuario = _db.Usuarios.FirstOrDefault(u => u.Email == usuarioLogado);
+
+        if (usuario == null)
         {
-            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-            {
-                Console.WriteLine(error.ErrorMessage); // Verifique os erros no console
-            }
-            return View(musicas);
+            TempData["MensagemErro"] = "Erro: Usuário não autenticado.";
+            return RedirectToAction("Index", "Home");
         }
 
-        if (await _db.Musicas.AnyAsync(m => m.Nome == musicas.Nome && m.Artista == musicas.Artista))
+        musicas.UsuarioId = usuario.Id;
+        Console.WriteLine($"Usuario ID para musica: {usuario.Id}");
+
+        if (ModelState.IsValid)
         {
-            TempData["MensagemErro"] = "Esta música já existe no banco";
-            return RedirectToAction("Cadastrar");
+            try
+            {
+                _db.Musicas.Add(musicas);
+                await _db.SaveChangesAsync();
+
+                TempData["MensagemSucesso"] = "Música cadastrada com sucesso!";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao salvar no banco de dados: {ex.Message}");
+                TempData["MensagemErro"] = "Erro ao salvar a música. Tente novamente.";
+                ViewBag.Categorias = new List<string> { "Rock", "Pop", "Eletrônica", "Clássica", "Nacional", "Gospel" };
+                return View(musicas);
+            }
         }
+
 
         _db.Musicas.Add(musicas);
         await _db.SaveChangesAsync();
+
         TempData["MensagemSucesso"] = "Música cadastrada com sucesso!";
         return RedirectToAction("Index");
     }
 
 
+
     [HttpPost]
-    public IActionResult Editar(MusicasModel musicas)
+    public async Task<IActionResult> Editar(MusicasModel musicas)
     {
         if (ModelState.IsValid)
         {
-            _db.Musicas.Update(musicas);
-            _db.SaveChanges();
-            
-            TempData["MensagemSucesso"] = "Música editada com sucesso!";
-            
-            return RedirectToAction("Index");
+            try
+            {
+                var musicaExistente = await _db.Musicas.FindAsync(musicas.Id);
+                if (musicaExistente == null)
+                {
+                    TempData["MensagemErro"] = "Música não encontrada.";
+                    return RedirectToAction("Index");
+                }
+
+                musicaExistente.Nome = musicas.Nome;
+                musicaExistente.Artista = musicas.Artista;
+                musicaExistente.Categoria = musicas.Categoria;
+                musicaExistente.Lancamento = musicas.Lancamento;
+                musicaExistente.Link = musicas.Link;
+
+                _db.Musicas.Update(musicaExistente);
+                await _db.SaveChangesAsync();
+
+                TempData["MensagemSucesso"] = "Música editada com sucesso!";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao atualizar a música: {ex.Message}");
+                TempData["MensagemErro"] = "Erro ao atualizar a música. Tente novamente.";
+                return View(musicas);
+            }
         }
 
+        ViewBag.Categorias = new List<string> { "Rock", "Pop", "Eletrônica", "Clássica", "Nacional", "Gospel" };
         return View(musicas);
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> Deletar(int id)
     {
-        var music = await _db.Musicas.FindAsync(id);
+        var musica = await _db.Musicas.FindAsync(id);
 
-        if (music == null)
+        if (musica == null)
         {
             TempData["MensagemErro"] = "Música não encontrada.";
             return RedirectToAction("Index");
         }
 
-        _db.Musicas.Remove(music);
+        _db.Musicas.Remove(musica);
         await _db.SaveChangesAsync();
 
         TempData["MensagemSucesso"] = "Música excluída com sucesso.";
         return RedirectToAction("Index");
     }
-    
 }

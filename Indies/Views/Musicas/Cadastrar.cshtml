@@ -4,16 +4,18 @@
     ViewData["Title"] = "Cadastrar";
 }
 
-<head>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-</head>
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success">@TempData["MensagemSucesso"]</div>
+}
 
 <div class="container bg-dark mt-5 p-4 rounded-3 overflow-hidden">
     <div class="mb-5 text-center">
         <h1 class="text-light" style="font-weight: 200">Cadastrar músicas</h1>
     </div>
+
     <form method="post" asp-controller="Musicas" asp-action="Cadastrar">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        
         <div class="mb-3">
             <label for="Nome" class="form-label text-light">Nome</label>
             <input type="text" class="form-control" asp-for="Nome" id="Nome" placeholder="Qual o nome da música?"/>
@@ -22,8 +24,7 @@
 
         <div class="mb-3">
             <label for="Artista" class="form-label text-light">Artista</label>
-            <input type="text" class="form-control" asp-for="Artista" id="Artista"
-                   placeholder="Qual o nome do(a) artista?"/>
+            <input type="text" class="form-control" asp-for="Artista" id="Artista" placeholder="Nome do artista"/>
             <span asp-validation-for="Artista" class="text-danger"></span>
         </div>
 
@@ -37,24 +38,13 @@
                         <option value="@categoria">@categoria</option>
                     }
                 }
-                else
-                {
-                    <option value="Rock">Rock</option>
-                    <option value="Pop">Pop</option>
-                    <option value="Eletrônica">Eletrônica</option>
-                    <option value="Indie">Indie</option>
-                    <option value="Clássica">Clássica</option>
-                    <option value="Internacional">Internacional</option>
-                    <option value="Gospel">Gospel</option>
-                }
             </select>
             <span asp-validation-for="Categoria" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
             <label for="Lancamento" class="form-label text-light">Lançamento</label>
-            <input type="date" class="form-control" asp-for="Lancamento" id="Lancamento"
-                   placeholder="Qual o Lançamento da música?"/>
+            <input type="date" class="form-control" asp-for="Lancamento" id="Lancamento"/>
             <span asp-validation-for="Lancamento" class="text-danger"></span>
         </div>
 
@@ -64,8 +54,10 @@
             <span asp-validation-for="Link" class="text-danger"></span>
         </div>
 
-        <div class="d-flex gap-5 mt-5">
-            <button type="submit" class="btn btn-success m-50">Adicionar</button>
+        <div class="d-flex gap-5 mt-3">
+            <button type="submit" class="btn btn-success">Adicionar</button>
         </div>
+        
     </form>
+
 </div>

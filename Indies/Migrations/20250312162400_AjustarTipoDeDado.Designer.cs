@@ -4,6 +4,7 @@ using Indies.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Indies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250312162400_AjustarTipoDeDado")]
+    partial class AjustarTipoDeDado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,8 +37,9 @@ namespace Indies.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Categoria")
-                        .HasColumnType("int");
+                    b.Property<string>("Categoria")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Lancamento")
                         .HasColumnType("datetime2");
@@ -51,14 +55,9 @@ namespace Indies.Migrations
                     b.Property<int?>("UsuarioId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsuariosModelId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UsuarioId");
-
-                    b.HasIndex("UsuariosModelId");
 
                     b.ToTable("Musicas");
                 });
@@ -70,6 +69,11 @@ namespace Indies.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -86,17 +90,27 @@ namespace Indies.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
+
+                    b.HasDiscriminator().HasValue("UsuariosModel");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Indies.Models.AdministradorModel", b =>
+                {
+                    b.HasBaseType("Indies.Models.UsuariosModel");
+
+                    b.Property<Guid>("Chave")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasDiscriminator().HasValue("AdministradorModel");
                 });
 
             modelBuilder.Entity("Indies.Models.MusicasModel", b =>
                 {
                     b.HasOne("Indies.Models.UsuariosModel", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId");
-
-                    b.HasOne("Indies.Models.UsuariosModel", null)
                         .WithMany("Musicas")
-                        .HasForeignKey("UsuariosModelId");
+                        .HasForeignKey("UsuarioId");
 
                     b.Navigation("Usuario");
                 });
