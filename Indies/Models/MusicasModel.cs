@@ -19,6 +19,9 @@ public class MusicasModel
     [Required(ErrorMessage = "O campo Nome é obrigatório.")]
     public string Nome { get; set; }
 
+    [Required]
+    public int UsuarioId { get; set; }
+    
     [Required(ErrorMessage = "O campo Artista é obrigatório.")]
     public string Artista { get; set; }
 
@@ -26,13 +29,12 @@ public class MusicasModel
     public CategoriaMusica Categoria { get; set; } 
 
     [Required(ErrorMessage = "O campo Lançamento é obrigatório.")]
-    public DateTime Lancamento { get; set; } 
+    public DateOnly Lancamento { get; set; } 
 
     [Required(ErrorMessage = "O campo Link é obrigatório.")]
     [Url(ErrorMessage = "O Link informado não é válido.")]
     public string Link { get; set; }
 
-    public int? UsuarioId { get; set; }
 
     public UsuariosModel Usuario { get; set; }
 }

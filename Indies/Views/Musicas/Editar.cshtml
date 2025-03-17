@@ -5,11 +5,15 @@
 }
 
 <div class="container bg-dark p-5 rounded-3 overflow-hidden">
+
     <div class="mb-5 text-center">
-        <h1 class="text-light">Cadastrar de Músicas</h1>
+        <h1 class="text-light">Editar Música</h1>
     </div>
+
     <form method="post" asp-controller="Musicas" asp-action="Editar">
-        <input type="hidden" asp-for="Id"/>
+
+        <input type="hidden" asp-for="UsuarioId" value="@Model.UsuarioId"/>
+
         <div class="mb-5">
             <label for="Nome" class="form-label text-light">Nome</label>
             <input type="text" class="form-control" asp-for="Nome" id="Nome" placeholder="Qual o nome da música?"/>
@@ -27,7 +31,7 @@
             <select class="form-select" asp-for="Categoria" id="Categoria">
                 @if (ViewBag.Categorias != null)
                 {
-                    @foreach (var categoria in ViewBag.Categorias)
+                    @foreach (var categoria in Enum.GetValues(typeof(CategoriaMusica)))
                     {
                         <option value="@categoria">@categoria</option>
                     }
@@ -61,5 +65,23 @@
         <div class="d-flex gap-5 mt-5">
             <button type="submit" class="btn btn-success m-50">Editar</button>
         </div>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger mt-3">
+                @foreach (var modelError in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors))
+                {
+                    <p>@modelError.ErrorMessage</p>
+                }
+            </div>
+        }
+
+        @if (TempData["MensagemErro"] != null)
+        {
+            <div class="alert alert-danger mt-3">
+                @TempData["MensagemErro"]
+            </div>
+        }
+
     </form>
 </div>
