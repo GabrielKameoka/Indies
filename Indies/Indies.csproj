@@ -20,4 +20,11 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Components\Views\UsuarioModal\Default.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\Components\Views\UsuarioModal\Default.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Home\Components\UsuarioModal\Default.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\Components\UsuarioModal\Default.cshtml" />
+    </ItemGroup>
+
 </Project>

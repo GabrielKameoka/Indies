@@ -18,4 +18,8 @@ public class UsuariosModel
     public string Senha { get; set; }
 
     public ICollection<MusicasModel> Musicas { get; set; } = new List<MusicasModel>();
+
+    //O ICollection<MusicasModel> Musicas indica um relacionamento "um-para-muitos"
+    //entre UsuariosModel e MusicasModel. Isso significa que um usuário pode ter muitas
+    //músicas, mas cada música pertence a um único usuário.
 }
