@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\dev\\Indies\\Indies\\wwwroot\\img\\indies.png",
+      "PackagePath": "staticwebassets\\img\\indies.png"
+    },
+    {
       "Id": "C:\\dev\\Indies\\Indies\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

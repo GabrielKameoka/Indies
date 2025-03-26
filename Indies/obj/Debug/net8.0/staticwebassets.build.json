@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "J2cuKG3oX0pWvHEmbmJP2p1pSv034uwT2QX99UIqKYc=",
+  "Hash": "H+IiCtuNpiMSWaptzmLkY1gvzF8sVb6131PYTnk+DwE=",
   "Source": "Indies",
   "BasePath": "_content/Indies",
   "Mode": "Default",
@@ -110,6 +110,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\dev\\Indies\\Indies\\wwwroot\\img\\indies.png",
+      "SourceId": "Indies",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\dev\\Indies\\Indies\\wwwroot\\",
+      "BasePath": "_content/Indies",
+      "RelativePath": "img/indies.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\indies.png"
     },
     {
       "Identity": "C:\\dev\\Indies\\Indies\\wwwroot\\js\\site.js",
