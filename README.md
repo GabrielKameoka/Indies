@@ -1,4 +1,4 @@
-# IndieTrack - Cadastro de Músicas Indies
+# Indies - Cadastro de Músicas Indies
 
 ## Descrição
 O **IndieTrack** é uma aplicação web desenvolvida para catalogar e gerenciar músicas independentes. Os usuários podem cadastrar informações sobre músicas, artistas e álbuns, além de explorar um banco de dados colaborativo de canções indie.
