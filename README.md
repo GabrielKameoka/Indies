@@ -4,7 +4,7 @@
 O **Indies** é uma aplicação web desenvolvida para catalogar e gerenciar músicas independentes. Os usuários podem cadastrar informações sobre músicas, artistas e álbuns, além de explorar um banco de dados colaborativo de canções indie.
 
 ![Texto alternativo](./Indies/wwwroot/img/indies.png)
-Link para o post:[link.in](https://www.linkedin.com/feed/update/urn:li:activity:7307817725337198593/)'
+Link para o post:[link.in](https://www.linkedin.com/feed/update/urn:li:activity:7307817725337198593/)
 
 ## Funcionalidades
 - Cadastro de músicas com nome, artista, álbum, gênero e ano de lançamento
